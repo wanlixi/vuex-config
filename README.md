@@ -62,7 +62,7 @@ const store = new Vuex.Store({
 #### store>types.js
 ```
 export const GET_USER_INFO = 'GET_USER_INFO'
-export const SET_USER_FAVORITE = 'SET_USER_FAVORITE'
+export const ADD_FAVORITE = 'ADD_FAVORITE'
 ```
 #### store>mutations.js
 ```
@@ -71,7 +71,7 @@ consts mutations = {
   [types.GET_USER_INFO] (state) {
     return state
   },
-  [types.SET_USER_FAVORITE] (state, newFavorite) {
+  [types.ADD_FAVORITE] (state, newFavorite) {
     state.favorite.push(newFavorite)
   }
 }
@@ -79,23 +79,28 @@ consts mutations = {
 #### store>actions.js
 ```
 export const GET_USER_INFO = ({commit}) => commit('GET_USER_INFO')
-export const SET_USER_FAVORITE = ({commit}, newFavorite) => commit('SET_USER_FAVORITE', newFavorite)
+export const ADD_FAVORITE = ({commit}, newFavorite) => commit('ADD_FAVORITE', newFavorite)
 ```
 #### src>index.js
 ```
 <template>
-name:
+name: <p>{{userInfo.userName}}</p>
+sex: <p>{{userInfo.sex}}</p>
+phone: <p>{{userInfo.phone}}</p>
+city: <p>{{userInfo.city}}</p>
+<button @click="printUserInfo">弹出用户信息</button>
 </template>
 <script type="text/babel">
 import { mapActions } from 'vuex'
 export default {
   data () {
-  },
+    userInfo: this.$store.state.userInfo
+  },
   mounted () {
   
   },
   methods: {
-    ...mapActions({addFavorite: 'SET_USER_FAVORITE'})
+    ...mapActions({printUserInfo: 'GET_USER_INFO'})
   }
 } 
 ```
