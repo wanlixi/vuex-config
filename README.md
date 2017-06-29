@@ -1,4 +1,4 @@
-# vuex-configvue
+# vuex-config
 vuex实战项目中简单实用的配置，这次主要介绍vuex的使用，欢迎 Star or Issue
 
 #### 通常我们的项目的目录结构是这样的
@@ -41,12 +41,14 @@ import * as types from './types'
 import * as actions from './actions'
 Vue.use(Vuex)
 const state = {
-  id:12,
-  userName:'jay',
-  sex: 'man',
-  country: 'china',
-  city: 'shanghai',
-  favorite: [ 'book', 'game', 'sing']
+  userInfo: {
+    id:12,
+    userName:'jay',
+    sex: 'man',
+    country: 'china',
+    city: 'shanghai',
+    favorite: [ 'book', 'game', 'sing']
+   }
 }
 const debug = process.env.NODE_ENV !== 'production'
 const store = new Vuex.Store({
@@ -69,17 +71,19 @@ export const ADD_FAVORITE = 'ADD_FAVORITE'
 import * as types from './types'
 consts mutations = {
   [types.GET_USER_INFO] (state) {
-    return state
+    alert(state.userInfo.userName,state.userInfo.sex,state.userInfo.city)
+    return state.userInfo
   },
   [types.ADD_FAVORITE] (state, newFavorite) {
-    state.favorite.push(newFavorite)
+    state.userInfo.favorite.push(newFavorite)
   }
 }
 ```
 #### store>actions.js
 ```
-export const GET_USER_INFO = ({commit}) => commit('GET_USER_INFO')
-export const ADD_FAVORITE = ({commit}, newFavorite) => commit('ADD_FAVORITE', newFavorite)
+immport * as types from './types'
+export const GET_USER_INFO = ({commit}) => commit(types.GET_USER_INFO)
+export const ADD_FAVORITE = ({commit}, newFavorite) => commit(types.ADD_FAVORITE, newFavorite)
 ```
 #### src>index.js
 ```
@@ -88,20 +92,29 @@ name: <p>{{userInfo.userName}}</p>
 sex: <p>{{userInfo.sex}}</p>
 phone: <p>{{userInfo.phone}}</p>
 city: <p>{{userInfo.city}}</p>
+country: <p>{{country}}</p>
 <button @click="printUserInfo">弹出用户信息</button>
 </template>
 <script type="text/babel">
-import { mapActions } from 'vuex'
+import { mapActions , mapState, mapMutations, mapGetters } from 'vuex'
 export default {
   data () {
     userInfo: this.$store.state.userInfo
   },
-  mounted () {
-  
-  },
+  mounted () {},
+  computed: mapStates({
+    country: state => state.userInfo.country,
+  }),
   methods: {
-    ...mapActions({printUserInfo: 'GET_USER_INFO'})
-  }
+    // 第一种 (分发 dispatch)
+    // ...mapActions({printUserInfo: 'GET_USER_INFO'}),
+    // 第二种 (分发 commit)
+    // ...mapMutations({printUserInfo: 'GET_USER_INFO'}),
+    // 第三种
+    printUserInfo () {
+      this.$store.dispatch('GET_USER_INFO')
+    }
+  }
 } 
 ```
 
