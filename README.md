@@ -66,7 +66,7 @@ export const SET_USER_FAVORITE = 'SET_USER_FAVORITE'
 ```
 #### store>mutations.js
 ```
-import * as actions from './actions'
+import * as types from './types'
 consts mutations = {
   [types.GET_USER_INFO] (state) {
     return state
