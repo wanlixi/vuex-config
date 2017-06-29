@@ -76,7 +76,7 @@ consts mutations = {
   }
 }
 ```
-#### store>mutations.js
+#### store>actions.js
 ```
 export const GET_USER_INFO = ({commit}) => commit('GET_USER_INFO')
 export const SET_USER_FAVORITE = ({commit}, newFavorite) => commit('SET_USER_FAVORITE', newFavorite)
