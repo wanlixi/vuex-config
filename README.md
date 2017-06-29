@@ -118,6 +118,7 @@ export default {
 } 
 ```
 
+最后附上vuex 里面几个工具函数的 [详细讲解](http://www.imooc.com/article/14741)
 
 
 
